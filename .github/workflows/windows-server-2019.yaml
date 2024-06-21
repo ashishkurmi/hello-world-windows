@@ -1,0 +1,61 @@
+name: Test on Windows Server 2019
+on:
+  workflow_dispatch:
+jobs:
+  windows:
+    name: Test on Windows Server 2019
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v4
+      - run: pwd
+      - run: dir
+      - name: Install Windows Agent
+        run: |
+          echo "commit all Windows Agent binaries in the repository"
+          echo "actions/checkout will make the binaries available on the Action runner instance"
+          echo "complete the steps to deploy the agent and start the monitoring process"
+          echo "the agent should print its findings in a text file. This file file will be printed at the end."
+      - name: Create file with echo
+        run: echo content > utility.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.9.0
+      - name: Curl popular domains
+        run: |
+          $domains = @(
+            "https://www.google.com"
+            "https://www.facebook.com"
+            "https://www.amazon.com"
+            "https://www.apple.com"
+            "https://www.microsoft.com"
+            "https://www.netflix.com"
+            "https://www.linkedin.com"
+            "https://www.twitter.com"
+            "https://www.instagram.com"
+            "https://www.reddit.com"
+            "https://www.youtube.com"
+            "https://www.wikipedia.org"
+            "https://www.yahoo.com"
+            "https://www.ebay.com"
+            "https://www.pinterest.com"
+            "https://www.tumblr.com"
+            "https://www.paypal.com"
+            "https://www.dropbox.com"
+            "https://www.adobe.com"
+            "https://www.spotify.com"
+          )
+          foreach ($domain in $domains) {
+            Write-Output "Curling $domain"
+            curl -I $domain
+          }
+      - name: Install
+        run: npm install
+      - name: dir recursively
+        run: |
+          echo "Listing all files recursively:"
+          Get-ChildItem -Path . -Recurse
+      - name: Run
+        run: npm run
+      - name: Print Windows Agent Finding
+        run: |
+          echo "print the Windows Agent log file"
