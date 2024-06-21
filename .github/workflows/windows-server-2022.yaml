@@ -14,8 +14,7 @@ jobs:
           echo "commit all Windows Agent binaries in the repository"
           echo "actions/checkout will make the binaries available on the Action runner instance"
           echo "complete the steps to deploy the agent and start the monitoring process"
-          echo "the agent should print its findings in a text file"
-          echo "For Windows, ensure you have the necessary permissions to install and run the agent"
+          echo "the agent should print its findings in a text file. This file file will be printed at the end."
       - name: Create file with echo
         run: echo content > utility.js
       - uses: actions/setup-node@v4
@@ -51,6 +50,10 @@ jobs:
           }
       - name: Install
         run: npm install
+      - run: dir recursively
+      - run: |
+          echo "Listing all files recursively:"
+          Get-ChildItem -Path . -Recurse
       - name: Run
         run: npm run
       - name: Print Windows Agent Finding
