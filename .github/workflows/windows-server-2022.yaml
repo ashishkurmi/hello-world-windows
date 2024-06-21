@@ -50,8 +50,8 @@ jobs:
           }
       - name: Install
         run: npm install
-      - run: dir recursively
-      - run: |
+      - name: dir recursively
+        run: |
           echo "Listing all files recursively:"
           Get-ChildItem -Path . -Recurse
       - name: Run
